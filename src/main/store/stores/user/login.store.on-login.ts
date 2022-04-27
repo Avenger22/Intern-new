@@ -12,7 +12,7 @@ const onLogin = (payload: ILoginRequest): AppThunk => async (dispatch) => {
 
     if (response.user && response.token) {
       dispatch(setUser(response.user));
-      dispatch(navigateTo('/'));
+      dispatch(navigateTo('/dashboard'));
     }
 
   } 
