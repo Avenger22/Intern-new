@@ -15,15 +15,21 @@ class AuthManager {
   }
 
   static async getUserFromToken(token:string): Promise<IUser> {
+
     let userInfo: IUser = null;
-debugger
+// debugger
+
       try {
         let result = await (await axios.get(`authentication/validate-token?token=${token}`)).data;
         userInfo = result;
-      } catch (e) {
+      } 
+      
+      catch (e) {
         throw e;
       }
+
     return userInfo;
+
   }
 
   static async getTokenWithCredentials(payload: ILoginRequest): Promise<IUserInfo> {
@@ -41,6 +47,7 @@ debugger
     }
 
     return responseLogin;
+
   }
 
   static async loginWithCredentials(credentials: ILoginRequest): Promise<IUserInfo> {
@@ -49,15 +56,20 @@ debugger
   }
 
   static async register(user: IUser): Promise<void> {
-    const { data }  = await axios.post('authentication/register',user);
+
+    const { data }  = await axios.post('authentication/register', user);
+
     if (data?.token) {
       JwtManager.setAccessToken(data.token);
       window.location.pathname='/';
     }
+
   }
+
   static logout() {
     JwtManager.clearToken();
   }
+
 }
 
 export default AuthManager;

@@ -29,6 +29,8 @@ const LoginPage : FC = ()=>{
                         id="login-form"
 
                         onSubmit={function (e) {
+                            
+                            e.preventDefault()
 
                             const data = {
                                 userName,

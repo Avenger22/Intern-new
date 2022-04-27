@@ -7,6 +7,7 @@ import {RootState} from '../../main/store/redux/rootState'
 import { navigateTo } from "../../main/store/stores/navigation/navigation.store"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser } from "../../main/store/stores/user/user.store"
+import onRegister from "../../main/store/stores/user/register.store.on-register"
 
 import { 
     setFirstName, 
@@ -19,10 +20,12 @@ import {
 } from "../../main/store/stores/register/register.store"
 
 import IRegister from "../../main/interfaces/IRegister"
+import IUser from "../../main/interfaces/IUser"
 // #endregion 
 
 
 const RegisterPage : FC = ()=> {
+
 
     // #region "Using react hooks and other stuff"
     const navigate = useNavigate()
@@ -33,21 +36,21 @@ const RegisterPage : FC = ()=> {
     // #region "Getting the state from redux toolkiit with using use Selector"
     const firstName = useSelector((state: RootState) => state.registration.firstName);
     const lastName = useSelector((state: RootState) => state.registration.lastName);
-    const userName = useSelector((state: RootState) => state.registration.userName);
-    const birthDate = useSelector((state: RootState) => state.registration.birthDate);
-    const phoneNumber = useSelector((state: RootState) => state.registration.phoneNumber);
+    const username = useSelector((state: RootState) => state.registration.username);
+    const birthdate = useSelector((state: RootState) => state.registration.birthdate);
+    const phone = useSelector((state: RootState) => state.registration.phone);
     const email = useSelector((state: RootState) => state.registration.email);
     const password = useSelector((state: RootState) => state.registration.password);
     // #endregion
     
     
     // #region "Form Register event handler"
-    const registerData = {
+    const registerData: IUser = {
         firstName,
         lastName,
-        userName,
-        birthDate,
-        phoneNumber,
+        username,
+        birthdate,
+        phone,
         email,
         password
     }
@@ -88,6 +91,8 @@ const RegisterPage : FC = ()=> {
                 <div className="main-wrapper">
 
                     <form id="signup-form" onSubmit={function (e) {
+                        e.preventDefault()
+                        dispatch(onRegister(registerData))
                         // handleRegisterUser(e)
                         // navigate("../dashboard");
                     }}>
