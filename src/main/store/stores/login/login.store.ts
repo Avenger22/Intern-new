@@ -1,22 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ILoginRequest from '../../../interfaces/ILoginRequest';
-import ILogRequest from '../../../interfaces/ILoginRequest';
+
+const initialState: ILoginRequest = {
+  userName: "",
+  password: ""
+}
 
 const loginStore = createSlice({
 
   name: 'login',
 
-  initialState: null,
+  initialState,
 
   reducers: {
 
-    setUserNameLogin(_state, action: PayloadAction<ILoginRequest>) {
-        return {...action.payload};
+    setUserNameLogin(state, action: PayloadAction<string>) {
+      state.userName = action.payload
     },
 
-    setPasswordLogin(_state, action: PayloadAction<ILoginRequest>) {
-        return {...action.payload};
-    },
+    setPasswordLogin(state, action: PayloadAction<string>) {
+      state.password = action.payload
+    }
 
   },
 

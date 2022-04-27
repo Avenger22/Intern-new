@@ -2,10 +2,20 @@ import { FC, useEffect } from "react"
 // import { useStore } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css"
+import { useDispatch, useSelector } from "react-redux"
+import {RootState} from '../../main/store/redux/rootState'
+import onLogin from "../../main/store/stores/user/login.store.on-login"
+import { setUserNameLogin, setPasswordLogin } from "../../main/store/stores/login/login.store"
 
 const LoginPage : FC = ()=>{
 
+    // #region "Using react hooks and other stuff"
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    // #endregion
+
+    const userName = useSelector((state: RootState) => state.login.userName);
+    const password = useSelector((state: RootState) => state.login.password);
 
     return (
 
@@ -17,9 +27,17 @@ const LoginPage : FC = ()=>{
 
                     <form
                         id="login-form"
+
                         onSubmit={function (e) {
-                            // logInUser(e)
+
+                            const data = {
+                                userName,
+                                password
+                            }
+
+                            dispatch(onLogin(data))
                             // navigate("../dashboard");
+
                         }}
                     >
 
@@ -32,8 +50,9 @@ const LoginPage : FC = ()=>{
                                 name="usernameLogin"
                                 placeholder="Enter your userName: "
                                 required
+                                
                                 onChange={function (e) {
-                                    // setUserNameLogin(e)
+                                    dispatch(setUserNameLogin(e.target.value))
                                 }}
                             />
 
@@ -46,8 +65,9 @@ const LoginPage : FC = ()=>{
                                 name="passwordLogin"
                                 placeholder="Enter your password"
                                 required
+                                
                                 onChange={function (e) {
-                                    // setPasswordLogin(e)
+                                    dispatch(setPasswordLogin(e.target.value))
                                 }}
                             />
 

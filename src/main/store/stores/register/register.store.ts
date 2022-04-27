@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IRegister from '../../../interfaces/IRegister';
 
-const initialState = {
+const initialState: IRegister = {
     firstName: "",
     lastName: "",
     userName: "",
@@ -19,37 +19,35 @@ const registerStore = createSlice({
 
   reducers: {
 
-    setFirstName(state, action: PayloadAction<IRegister>) {
-        //@ts-ignore
+    setFirstName(state, action: PayloadAction<string>) {
         state.firstName = action.payload
-        // return {...action.payload};
     },
 
-    setLastName(state, action: PayloadAction<IRegister>) {
-        return {...action.payload};
+    setLastName(state, action: PayloadAction<string>) {
+        state.lastName = action.payload
     },
 
-    setUserNameRegister(state, action: PayloadAction<IRegister>) {
-        return {...action.payload};
+    setUserNameRegister(state, action: PayloadAction<string>) {
+        state.userName = action.payload
     },
 
-    setPasswordRegister(state, action: PayloadAction<IRegister>) {
-        return {...action.payload};
+    setPasswordRegister(state, action: PayloadAction<string>) {
+        state.password = action.payload
     },
 
-    setPhoneNumber(state, action: PayloadAction<IRegister>) {
-        return {...action.payload};
+    setPhoneNumber(state, action: PayloadAction<string>) {
+        state.phoneNumber = action.payload
     },
 
-    setEmailRegister(state, action: PayloadAction<IRegister>) {
-        return {...action.payload};
+    setEmailRegister(state, action: PayloadAction<string>) {
+        state.email = action.payload
     },
 
-    setBirthDate(state, action: PayloadAction<IRegister>) {
-        return {...action.payload};
+    setBirthDate(state, action: PayloadAction<string>) {
+        state.birthDate = action.payload
     }
 
-  },
+  }
 
 });
 

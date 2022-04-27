@@ -2,11 +2,11 @@ interface IRegister {
 
   firstName: string;
   lastName: string;
-  userNameRegister: string;
-  passwordRegister: string
+  userName: string;
+  password: string
   phoneNumber: string
   birthDate: string
-  emailRegister: string;
+  email: string;
 
 }
 

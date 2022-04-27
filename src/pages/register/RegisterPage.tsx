@@ -1,3 +1,4 @@
+// #region "Importing stuff, components and also importing pieces of state etc"
 import { FC, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -17,26 +18,43 @@ import {
     setPasswordRegister
 } from "../../main/store/stores/register/register.store"
 
+import IRegister from "../../main/interfaces/IRegister"
+// #endregion 
+
+
 const RegisterPage : FC = ()=> {
 
+    // #region "Using react hooks and other stuff"
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const firstName = useSelector((state: any) => state.register);
+    // #endregion
 
+
+    // #region "Getting the state from redux toolkiit with using use Selector"
+    const firstName = useSelector((state: RootState) => state.registration.firstName);
+    const lastName = useSelector((state: RootState) => state.registration.lastName);
+    const userName = useSelector((state: RootState) => state.registration.userName);
+    const birthDate = useSelector((state: RootState) => state.registration.birthDate);
+    const phoneNumber = useSelector((state: RootState) => state.registration.phoneNumber);
+    const email = useSelector((state: RootState) => state.registration.email);
+    const password = useSelector((state: RootState) => state.registration.password);
+    // #endregion
+    
+    
+    // #region "Form Register event handler"
+    const registerData = {
+        firstName,
+        lastName,
+        userName,
+        birthDate,
+        phoneNumber,
+        email,
+        password
+    }
 
     const handleRegisterUser = (e:any) => {
 
         e.preventDefault()
-
-        const registerData = {
-            firstName,
-            lastName,
-            userName,
-            birthDate,
-            phoneNumber,
-            email,
-            password
-        }
 
         fetch('http://reimusabelli-001-site1.itempurl.com/api/authentication/register', {
 
@@ -51,10 +69,15 @@ const RegisterPage : FC = ()=> {
         })
         .then(resp => resp.json())
         .then(data => {
-            dispatch(setUser(data))
+            // dispatch(setUser(data))
+            console.log(data)
         })
 
     }
+    // #endregion
+
+    
+    // console.log(registerData)
 
     return (
 
@@ -65,6 +88,7 @@ const RegisterPage : FC = ()=> {
                 <div className="main-wrapper">
 
                     <form id="signup-form" onSubmit={function (e) {
+                        // handleRegisterUser(e)
                         // navigate("../dashboard");
                     }}>
                         
@@ -73,7 +97,6 @@ const RegisterPage : FC = ()=> {
                         <label id="firstname" htmlFor="">
 
                             <input type="text" name = "firstName" placeholder="Enter your firstname" required onChange={function (e) {
-                                //@ts-ignore
                                 dispatch(setFirstName(e.target.value))
                             }}/>
 
@@ -82,7 +105,6 @@ const RegisterPage : FC = ()=> {
                         <label id="lastname" htmlFor="">
 
                             <input type="text" name = "lastName" placeholder="Enter your lastname" required onChange={function (e) {
-                                //@ts-ignore
                                 dispatch(setLastName(e.target.value))
                             }}/>
 
@@ -91,7 +113,6 @@ const RegisterPage : FC = ()=> {
                         <label id="username" htmlFor="">
 
                             <input type="text" name = "username" placeholder="Enter your username" required onChange={function (e) {
-                                //@ts-ignore
                                 dispatch(setUserNameRegister(e.target.value))
                             }}/>
 
@@ -100,8 +121,7 @@ const RegisterPage : FC = ()=> {
                         <label htmlFor="">
 
                             <input type="text" name = "email" id="email" placeholder="Enter your email" onChange={function (e) {
-                                //@ts-ignore
-                                dispatch(setEmail(e.target.value))
+                                dispatch(setEmailRegister(e.target.value))
                             }}/>
 
                         </label>
@@ -109,7 +129,6 @@ const RegisterPage : FC = ()=> {
                         <label id="username" htmlFor="">
 
                             <input type="phone" name = "phone" placeholder="Enter your phone number" required onChange={function (e) {
-                                //@ts-ignore
                                 dispatch(setPhoneNumber(e.target.value))
                             }}/>
 
@@ -118,7 +137,6 @@ const RegisterPage : FC = ()=> {
                         <label id="username" htmlFor="">
 
                             <input type="date" name = "birthdate" placeholder="Enter your birthday" required onChange={function (e) {
-                                //@ts-ignore
                                 dispatch(setBirthDate(e.target.value))
                             }}/>
 
@@ -133,7 +151,6 @@ const RegisterPage : FC = ()=> {
                                 placeholder="Enter your password"
                                 required
                                 onChange={function (e) {
-                                    //@ts-ignore
                                     dispatch(setPasswordRegister(e.target.value))
                                 }}
                             />
