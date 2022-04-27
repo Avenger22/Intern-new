@@ -1,0 +1,42 @@
+table, th, td {
+    border: 1px solid;
+  }
+  
+  td {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    padding: 10px 10px;
+  }
+  
+  table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  
+  .post-item {
+    cursor: pointer;
+  }
+  
+  .table-wrapper {
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0.5fr 0.5fr;
+    grid-gap: 150px;
+    place-items: center;
+  }
+  
+.dashboard-main-wrapper {
+    height: auto;
+    display: grid;
+    grid-template: 
+    "header" 0.1fr,
+    "dashboard-table" auto,
+    "footer" 0.1fr / 
+    1fr;
+}
+
+.dashboard-wrapper {
+    grid-area: dashboard-table;
+}
