@@ -31,10 +31,12 @@ class PropertyManager {
     }
 
     if (postDot > 0 && postDot < propertyName.length - 1) {
+
       return Object.prototype.hasOwnProperty.call(
         obj,
         propertyName.substring(0, postDot)
       );
+
     }
 
     console.log(`Invalid use PropertyManager.hasProperty [${propertyName}]`);
@@ -71,6 +73,7 @@ class PropertyManager {
       if (subModel) {
         return PropertyManager.getValue(subModel, propSecondBlock);
       }
+      
       return "";
 
     }

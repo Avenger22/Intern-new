@@ -11,7 +11,9 @@ initApp().then((appStore: any) => {
   ReactDOM.render(
 
     <React.StrictMode>
+
       <Provider store={appStore}>
+        
         <ToastContainer
           autoClose={5000}
           hideProgressBar={false}
@@ -23,7 +25,9 @@ initApp().then((appStore: any) => {
           pauseOnHover
         />
         <App />
+
       </Provider>
+
     </React.StrictMode>,
 
     document.getElementById("root")

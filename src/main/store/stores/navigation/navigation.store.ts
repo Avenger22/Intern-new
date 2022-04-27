@@ -14,7 +14,7 @@ const navigationStore = createSlice({
 
     invalidateNavigate() {
       return null;
-    },
+    }
 
   },
   

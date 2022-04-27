@@ -7,16 +7,7 @@ import IUser from '../../../interfaces/IUser';
 const onRegister = (payload: IUser): AppThunk => async (dispatch) => {
 
   try {
-    
-    const response = await AuthManager.register({ ...payload });
-
-    //@ts-ignore
-    if (response.user && response.token) {
-      //@ts-ignore
-      dispatch(setUser(response.user));
-      dispatch(navigateTo('/'));
-    }
-
+    await AuthManager.register({ ...payload });
   } 
   
   catch (err:any) {

@@ -13,10 +13,14 @@ const userStore = createSlice({
       return {...action.payload, password:''};
     },
 
-  },
+    invalidateUser() {
+      return null
+    }
+
+  }
 
 });
 
 export default userStore;
 
-export const { setUser } = userStore.actions;
+export const { setUser, invalidateUser } = userStore.actions;
