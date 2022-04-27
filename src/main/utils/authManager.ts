@@ -61,7 +61,7 @@ class AuthManager {
 
     if (data?.token) {
       JwtManager.setAccessToken(data.token);
-      window.location.pathname='/dashboard';
+      window.location.pathname='/';
     }
 
   }
