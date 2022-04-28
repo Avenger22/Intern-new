@@ -97,6 +97,22 @@
     place-items: center;
     place-content: center;
   }
+
+  .button-clear-cart {
+    padding: 15px 20px;
+    border: none;
+    color: rgb(240, 218, 218);
+    background-color: rgb(214, 87, 28);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+    margin-left: 100px;
+  }
   
   .basket-container button.button-proceed-payment {
     padding: 15px 20px;
@@ -128,4 +144,20 @@
   .basket-container__item span {
     font-size: 12px;
     font-weight: 700;
+  }
+
+  .create-account-bank {
+    padding: 15px 20px;
+    border: none;
+    color: rgb(240, 218, 218);
+    background-color: rgb(214, 87, 28);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+    margin-left: 50px;
   }

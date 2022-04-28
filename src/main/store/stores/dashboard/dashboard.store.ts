@@ -3,9 +3,12 @@ import IDashboard from "../../../interfaces/IDashboard"
 import { TProduct } from '../../../interfaces/TProduct';
 
 const initialState: IDashboard = {
+
     products: [],
+    
     //@ts-ignore
     productItem: null
+
 }
 
 const dashboardStore = createSlice({

@@ -10,6 +10,7 @@ import ProductItemPage from "../pages/productItem/ProductItemPage"
 import CartPage from "../pages/cart/CartPage"
 import UserProfilePage from "../pages/user/UserProfilePage"
 import CheckoutPage from "../pages/checkout/CheckoutPage"
+import CreateBankAccountPage from "../pages/bankAccount/CreateBankAccountPage"
 
 import "../app/App.css"
 
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/profile/:username" element= {<PrivateRoute><UserProfilePage /></PrivateRoute>} />
         <Route path="/transaction/:id/checkout" element= {<PrivateRoute><CheckoutPage /></PrivateRoute>} />
         <Route path="/profile/:username/:tab" element = { <UserProfilePage /> } />
+        <Route path="/createBankAccount" element= {<PrivateRoute><CreateBankAccountPage /></PrivateRoute>} />
 
       </Routes>
 
