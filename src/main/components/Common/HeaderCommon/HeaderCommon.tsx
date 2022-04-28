@@ -6,11 +6,15 @@ import onLogout from "../../../store/stores/user/login.store.on-logout"
 
 import useGetUser from "../../../hooks/useGetUser/index"
 import { useDispatch } from "react-redux";
+import { navigateTo } from "../../../store/stores/navigation/navigation.store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function HeaderCommon(this: any) {
     
     const user = useGetUser()
+    const navigate = useNavigate()
     const dispatch = useDispatch();
+
     // console.log(user)
 
     return (
@@ -21,28 +25,12 @@ export default function HeaderCommon(this: any) {
                         
                 <div className="header-group-1">
 
-                    <Link to="/">Bank System</Link>
+                    <Link to="/dashboard">Bank System</Link>
                     
                     <ul className="list-nav">
 
                         <div className="div-inside-li">                            
-                            <NavLink to = "/" className="special-uppercase" >Nav1</NavLink>
-                        </div>
-
-                        <div className="div-inside-li-special">
-
-                                <div className="genre-drop">
-
-                                    <li className="special-uppercase" onClick={function (e) {
-                                        e.stopPropagation()
-                                    }}>Nav 2</li>
-
-                                </div>
-
-                        </div>
-
-                        <div className="div-inside-li">                           
-                            <NavLink to ="/" className="special-uppercase" >Nav 3</NavLink>                           
+                            <NavLink to = "/dashboard" className="special-uppercase" >Home</NavLink>
                         </div>
 
                     </ul>
@@ -52,30 +40,10 @@ export default function HeaderCommon(this: any) {
                 <div className="header-group-2">
                     
                     <form className="button-search" onSubmit={function (e) {
-                        
-                        // e.preventDefault()
-                        // //@ts-ignore
-                        // setSearchTerm(e.target.value)
-                        // //@ts-ignore
-                        // navigate(`../movies/search/${e.target.searchMovie.value}`)
-                    
                     }}>
 
                         <input type="search" name="searchMovie"  placeholder="Search for Products..." aria-label="Search through site content" 
-                        onChange={function (e) {
-
-                            // navigate(`../movies/search/${e.target.value}`)
-
-                            // if (e.target.value.length > 0) {
-                            //     setSearchTerm(e.target.value)
-                            //     navigate(`../movies/search/${e.target.value}`)
-                            // }
-
-                            // else {
-                            //     setSearchTerm(e.target.value)
-                            //     navigate(`../movies/search/`)
-                            // }
-                            
+                        onChange={function (e) {  
                         }}/>
 
                         <button type="submit">
@@ -87,7 +55,7 @@ export default function HeaderCommon(this: any) {
                     { user === null ? (
 
                             <button className="button-login-header" onClick={function () {
-                            //   navigate("../login")
+                                navigate("/login")
                             }}>
 
                                 <i className="material-icons special-icon">account_circle</i>
@@ -103,11 +71,11 @@ export default function HeaderCommon(this: any) {
                               <li
                                 className="dropbtn"
                                 onClick={function () {
-                                    // redirectToProfile(user);
+                                    navigate(`/profile/${user?.username}`)
                                 }}
                               >
 
-                                <img src={"/assets/images/blank-avatar.jpg"} />
+                                <img src={"https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"} />
                                 {user.username}
                                 
                               </li>
@@ -130,6 +98,10 @@ export default function HeaderCommon(this: any) {
                             </div>
 
                         )}
+
+                      {/* @ts-ignore */}
+                      {/* <FontAwesomeIcon icon="fa-solid fa-cart-minus" /> */}
+                      {/* <i className="fa-solid fa-cart-minus"></i> */}
 
                 </div>
 

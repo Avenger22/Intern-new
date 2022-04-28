@@ -14,7 +14,9 @@ import {
 } from "../../main/store/stores/dashboard/dashboard.store"
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
+import useGetUser from "../../main/hooks/useGetUser";
 // #endregion
+
 
 const randColour = ["green", "red", "blue", "yellow"][
     Math.floor(Math.random() * 4)
@@ -22,16 +24,20 @@ const randColour = ["green", "red", "blue", "yellow"][
 
 export default function ProductItemPage() {
 
+
     // #region "React hooks"
     const dispatch = useDispatch()
     const params = useParams()
     const navigate = useNavigate()
     // #endregion
 
+
     // #region "State redux and axios etc"
 
     //@ts-ignore
     const productItem: TProduct = useSelector((state: RootState) => state.dashboard.productItem);
+
+    const user = useGetUser()
 
     async function getProductItemFromServer() {
         let result = await (await axios.get(`/product/${params.id}`));
@@ -44,9 +50,10 @@ export default function ProductItemPage() {
 
     // #endregion
 
+
     // #region "Checking if product came and loading if it still loading the res from server"
 
-    if (productItem?.name === null && productItem === null) {
+    if (productItem?.name === null && productItem === null || productItem?.name === undefined) {
 
         return (
             <div className="loading-wrapper">
@@ -62,6 +69,7 @@ export default function ProductItemPage() {
 
     // #endregion
     
+
     return (
 
         <>
@@ -114,7 +122,7 @@ export default function ProductItemPage() {
                             <div className='button-wish-wrapper'>
                                 
                                 <button onClick={function (e) {
-                                    
+                                    navigate(`/${user?.username}/cart`)
                                 }}>
 
                                     Add to Cart
