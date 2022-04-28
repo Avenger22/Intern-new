@@ -8,37 +8,56 @@ import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon"
 import axios from "axios";
 import "../dashboard/DashboardPage.css"
+import ReactLoading from 'react-loading';
 
 import { 
     setProducts,
-    invalidateProducts
+    invalidateProducts,
+    setProductItem,
+    invalidateProductItem
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { TProduct } from "../../main/interfaces/TProduct";
 // #endregion
 
+
 const DashboardPage : FC = ()=>{
+
 
     // #region "Using react hooks and other stuff"
     const navigate = useNavigate()
     const dispatch = useDispatch();
     // #endregion
 
+
     // #region "Products state and fetching etc with axios"
     const products: TProduct[] = useSelector((state: RootState) => state.dashboard.products);
+    
+    //@ts-ignore
+    const productItem: TProduct = useSelector((state: RootState) => state.dashboard.productItem);
 
     async function getProductsFromServer() {
         let result = await (await axios.get(`/product/get-all?PageNumber=1&PageSize=20`)).data;
         dispatch(setProducts(result.data))
-        // console.log(result.data) save them in redux state
     }
 
     useEffect(()=> {
         getProductsFromServer()
     }, [])
 
-    console.log(products)
     // #endregion
+
+
+    if (products[0]?.name === undefined) {
+
+        return (
+            <div className="loading-wrapper">
+                <ReactLoading type={"spin"} color={"#000"} height={200} width={100} className="loading" />
+            </div>
+        )    
+    
+    }
+
 
     return (
 
@@ -48,15 +67,6 @@ const DashboardPage : FC = ()=>{
                 
             <div className="dashboard-wrapper">
 
-                {/* <button className="logOut" onClick = { function (e: any) {
-                    e.stopPropagation()
-                    dispatch(onLogout())
-                }}>
-
-                    Log Out
-
-                </button> */}
-
                 <div className='products-wrapper'>
 
                     { 
@@ -65,18 +75,18 @@ const DashboardPage : FC = ()=>{
                         products.map(product => 
                             
                             <div className="product-item" key = {product.id} onClick={() => {
-                                // handlePostClick(post)
+                                navigate(`/products/${product.id}`)
                             }}>
+
+                                <img
+                                    src={`data:image/jpeg;base64,${product.base64Image}`}
+                                    alt={`${product.name}`}
+                                />
 
                                 <span><strong>Product Name:</strong> {product.name}</span>
                                 <p><strong>Product Short Desc:</strong> {product.shortDescription}</p>
                                 <span><strong>Product Price:</strong> {product.price}$</span>
-                                <span><strong>Product Category:</strong> {product.categoryId}</span>
-                                
-                                <img
-                                    src={`data:image/jpeg;base64,${product.base64Image}`}
-                                    alt={`${product.name}`}
-                                />    
+                                <span><strong>Product Category:</strong> {product.categoryId}</span>    
 
                             </div>
                         

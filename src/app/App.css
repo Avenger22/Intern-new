@@ -21,3 +21,11 @@ body {
 html {
     scroll-behavior: smooth;
 }
+
+.loading-wrapper {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    z-index: 1;
+    background-color: #fff;
+}

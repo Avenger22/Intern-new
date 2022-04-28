@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IDashboard from "../../../interfaces/IDashboard"
+import { TProduct } from '../../../interfaces/TProduct';
 
 const initialState: IDashboard = {
-    products: []
+    products: [],
+    //@ts-ignore
+    productItem: null
 }
 
 const dashboardStore = createSlice({
@@ -19,6 +22,16 @@ const dashboardStore = createSlice({
 
     invalidateProducts(state) {
       state.products = []
+    },
+
+    setProductItem(state, action: PayloadAction<TProduct>) {
+      //@ts-ignore
+      state.productItem = action.payload
+    },
+
+    invalidateProductItem(state) {
+      //@ts-ignore
+      state.productItem = null
     }
 
   }
@@ -27,4 +40,4 @@ const dashboardStore = createSlice({
 
 export default dashboardStore;
 
-export const { setProducts, invalidateProducts } = dashboardStore.actions;
+export const { setProducts, invalidateProducts, setProductItem, invalidateProductItem } = dashboardStore.actions;

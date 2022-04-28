@@ -9,7 +9,7 @@ const PrivateRoute: FC<any> = (props: any) => {
   const userisAuthenticated = useGetUser();
 
   if(isPageLogin){
-    return userisAuthenticated ?<Navigate to="/" /> : children
+    return userisAuthenticated ?<Navigate to="/dashboard" /> : children
   }
 
   return userisAuthenticated ? children : <Navigate to="/login" />;
