@@ -39,6 +39,7 @@ const App = () => {
         
         <Route path="/profile/:username" element= {<PrivateRoute><UserProfilePage /></PrivateRoute>} />
         <Route path="/transaction/:id/checkout" element= {<PrivateRoute><CheckoutPage /></PrivateRoute>} />
+        
         <Route path="/profile/:username/:tab" element = { <UserProfilePage /> } />
         <Route path="/createBankAccount" element= {<PrivateRoute><CreateBankAccountPage /></PrivateRoute>} />
 

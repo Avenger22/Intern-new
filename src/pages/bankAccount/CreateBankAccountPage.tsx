@@ -12,7 +12,7 @@ export default function CreateBankAccountPage() {
 
     return (
 
-        <>
+        <div className="bankAccount-page-wrapper">
 
             <HeaderCommon />
 
@@ -75,7 +75,7 @@ export default function CreateBankAccountPage() {
 
             <FooterCommon />
 
-        </>
+        </div>
 
     )
 

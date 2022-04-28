@@ -1,6 +1,6 @@
 // #region "Importing stuff"
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { TProduct } from "../../main/interfaces/TProduct";
@@ -12,6 +12,14 @@ import {
     setProductItem,
     invalidateProductItem
 } from "../../main/store/stores/dashboard/dashboard.store"
+
+import {
+    addProduct,
+    deleteProductById,
+    changeProductQuantity,
+    invalidateCart
+} from "../../main/store/stores/cart/cart.store"
+
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 import useGetUser from "../../main/hooks/useGetUser";
@@ -30,6 +38,8 @@ export default function ProductItemPage() {
     const params = useParams()
     const navigate = useNavigate()
     // #endregion
+
+    const [ selectQuantity, setSelectQuantity ] = useState<any>("")
 
 
     // #region "State redux and axios etc"
@@ -61,10 +71,6 @@ export default function ProductItemPage() {
         )    
     
     }
-
-    // if (productItem?.name === undefined) {
-    //     return <main>Item not found</main>
-    // }
 
     // #endregion
     
@@ -121,12 +127,28 @@ export default function ProductItemPage() {
                             <div className='button-wish-wrapper'>
                                 
                                 <button onClick={function (e) {
+                                    dispatch(addProduct({ product: productItem, quantity: selectQuantity }))
                                     navigate(`/${user?.username}/cart`)
                                 }}>
 
                                     Add to Cart
 
                                 </button>
+
+                                <select name="quantity-select" id="quantity-select" 
+                                onChange={function (e: any) {
+                                    const quantityFromSelect = Number(e.target.value)
+                                    setSelectQuantity(e.target.value)
+                                    // dispatch(changeProductQuantity({ productId: productItem?.id, quantity: quantityFromSelect }))
+                                }}>
+                                     
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+
+                                </select>
 
                             </div>
 

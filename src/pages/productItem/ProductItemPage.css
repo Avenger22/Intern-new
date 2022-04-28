@@ -14,7 +14,8 @@ section.container-product-item {
   
   .button-wish-wrapper {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 0.5fr 0.5fr;
+    place-items: center;
   }
   
   section.container-product-item main.main-container {
