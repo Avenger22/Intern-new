@@ -36,7 +36,6 @@ export default function ProductItemPage() {
 
     //@ts-ignore
     const productItem: TProduct = useSelector((state: RootState) => state.dashboard.productItem);
-
     const user = useGetUser()
 
     async function getProductItemFromServer() {

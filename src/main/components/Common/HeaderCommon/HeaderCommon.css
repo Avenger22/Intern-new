@@ -108,12 +108,16 @@ color: #e92d2d;
 header.header .header-group-2 {
 grid-area: header-group-2;
 display: grid;
-grid-template-columns: 0.8fr 150px;
+grid-template-columns: 0.8fr 150px 100px;
 grid-gap: 30px;
 justify-content: end;
 justify-items: end;  
 align-items: center;
 padding-left: 250px;
+}
+
+.cart-icon {
+  background-color: #b61e1e;
 }
 
 .button-login-header {

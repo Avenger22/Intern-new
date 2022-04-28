@@ -66,7 +66,7 @@ section.container-product-item {
     .product-detail__side {
       position: relative;
       display: grid;
-      grid-template-rows: 20% auto;
+      grid-template-rows: 0.1fr auto;
       align-content: start;
       padding-left: 1rem;
       border-left: 2px solid;

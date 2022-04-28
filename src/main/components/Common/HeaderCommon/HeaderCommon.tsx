@@ -1,3 +1,4 @@
+// #region "Importing stuff"
 import { useEffect, useState } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./HeaderCommon.css"
@@ -8,14 +9,14 @@ import useGetUser from "../../../hooks/useGetUser/index"
 import { useDispatch } from "react-redux";
 import { navigateTo } from "../../../store/stores/navigation/navigation.store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// #endregion
+
 
 export default function HeaderCommon(this: any) {
     
     const user = useGetUser()
     const navigate = useNavigate()
     const dispatch = useDispatch();
-
-    // console.log(user)
 
     return (
 
@@ -89,6 +90,7 @@ export default function HeaderCommon(this: any) {
                                     dispatch(onLogout())
                                   }}
                                 >
+
                                   <span>Log Out</span>
 
                                 </button>
@@ -101,7 +103,10 @@ export default function HeaderCommon(this: any) {
 
                       {/* @ts-ignore */}
                       {/* <FontAwesomeIcon icon="fa-solid fa-cart-minus" /> */}
-                      {/* <i className="fa-solid fa-cart-minus"></i> */}
+                      
+                      <div className="cart-icon-header">
+                        <i className ="fa fa-shopping-cart" aria-hidden="true"></i>
+                      </div>
 
                 </div>
 
