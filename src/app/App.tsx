@@ -6,6 +6,7 @@ import DashboardPage from '../pages/dashboard/DashboardPage'
 import LoginPage from "../pages/login/LoginPage"
 import RegisterPage from "../pages/register/RegisterPage"
 import ErrorPage from "../pages/error/ErrorPage"
+import "../app/App.css"
 
 const App = () => {
 

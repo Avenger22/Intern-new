@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon"
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon"
 import axios from "axios";
-import "./DashboardPage.css"
+import "../dashboard/DashboardPage.css"
 
 import { 
     setProducts,
@@ -45,64 +45,46 @@ const DashboardPage : FC = ()=>{
         <div className="dashboard-main-wrapper">
 
             <HeaderCommon />
+                
+            <div className="dashboard-wrapper">
 
-            <button onClick = { function (e: any) {
+                {/* <button className="logOut" onClick = { function (e: any) {
                     e.stopPropagation()
                     dispatch(onLogout())
                 }}>
 
                     Log Out
 
-                </button>
-                
-            <div className="dashboard-wrapper">
+                </button> */}
 
-                <table className='table-data'>
-
-                    <thead>
-  
-                        <tr>
-            
-                            <th>Id: </th>
-                            <th>ProductName: </th>
-                            <th>shortDescription: </th>
-                            <th>longDescription: </th>
-                            <th>Price: </th>
-                            <th>CategoryId: </th>
-                            {/* <th>base64Image: </th> */}
-            
-                        </tr>
-            
-                    </thead>
-  
-                <tbody>
+                <div className='products-wrapper'>
 
                     { 
                     
                         // @ts-ignore
                         products.map(product => 
                             
-                            <tr className="post-item" key = {product.id} onClick={() => {
+                            <div className="product-item" key = {product.id} onClick={() => {
                                 // handlePostClick(post)
                             }}>
 
-                                <td>{product.id}</td>
-                                <td>{product.name}</td>
-                                <td>{product.shortDescription}</td>
-                                <td>{product.longDescription}</td>
-                                <td>{product.price}</td>
-                                <td>{product.categoryId}</td>
-                                {/* <td>{product.price}</td> */}
+                                <span><strong>Product Name:</strong> {product.name}</span>
+                                <p><strong>Product Short Desc:</strong> {product.shortDescription}</p>
+                                <span><strong>Product Price:</strong> {product.price}$</span>
+                                <span><strong>Product Category:</strong> {product.categoryId}</span>
+                                
+                                <img
+                                    src={`data:image/jpeg;base64,${product.base64Image}`}
+                                    alt={`${product.name}`}
+                                />    
 
-                            </tr>
+                            </div>
                         
                         )
 
                     }
 
-                </tbody>
-
-                </table>
+                </div>
 
             </div>
                 
