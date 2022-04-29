@@ -22,7 +22,7 @@ form.form-payment {
 
 .container-form-payment {
     display: grid;
-    grid-template-rows: 0.05fr 0.2fr 0.2fr 0.2fr 0.2fr 0.1fr 0.05fr;
+    grid-template-rows: 0.2fr 0.2fr 0.2fr 0.2fr 50px;
     grid-gap: 30px;
 
     width: 650px;
@@ -32,11 +32,7 @@ form.form-payment {
     padding-right: 35px;
     padding-top: 40px;
     padding-bottom: 40px;
-}
-
-.container-form-payment label {
-    display: grid;
-    grid-template-rows: 50px 50px;
+    place-items: center;
 }
 
 .container-form-payment label input {
@@ -76,6 +72,9 @@ form.form-payment {
     -ms-border-radius: 30px;
     -o-border-radius: 30px;
     font-weight: 600;
+    width: 60%;
+    display: grid;
+    place-self: center;
 }
 
 .container-form-payment button:hover {

@@ -1,3 +1,4 @@
+// #region "Importing stuff"
 import { useEffect, useState } from "react"
 import {useNavigate } from "react-router"
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon"
@@ -8,38 +9,63 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { TProduct } from "../../main/interfaces/TProduct"
 import { RootState } from "../../main/store/redux/rootState"
-import { ICartProduct } from "../../main/store/stores/cart/cart.store"
+import { IBankAccount, IBankAccountName, ICartProduct } from "../../main/store/stores/cart/cart.store"
 
 import {
     deleteProductById,
     changeProductQuantity,
-    invalidateCart
+    invalidateCart,
+    setSelectedBankAccount,
+    setSelectedBankAccountName,
+    setBankAccounts,
+    setSelectedBankAccountNameOnly
 } from "../../main/store/stores/cart/cart.store"
+// #endregion
+
 
 export default function BagPage() {
 
+
+    // #region "React hooks"
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    // #endregion
 
-    const [bankAccounts, setBankAccounts] = useState<any>([])
-    const [selectedBankAccount, setSelectedBankAccount] = useState<any>("")
+
+    // #region "Redux state and local state"
     const [selectedQuantityCart, setSelectedQuantityCart] = useState<any>("")
 
     const productsInTheCart: ICartProduct[] = useSelector((state: RootState) => state.cart.products);
     const totalValue: number = useSelector((state: RootState) => state.cart.totalValue);
+    const selectedBankAccount: IBankAccount = useSelector((state: RootState) => state.cart.selectedBankAccount);
+    const selectedBankAccountName: IBankAccountName | null = useSelector((state: RootState) => state.cart.selectedBankAccountName);
+    const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
+    const selectedBankAccountNameOnly: string = useSelector((state: RootState) => state.cart.selectedBankAccountNameOnly);
+    // #endregion
 
+
+    // #region "Fetching stuff from server"
     async function getBankAccountsFromServer() {
+
         let result = await (await axios.get(`/bankaccount/get-all?PageNumber=1&PageSize=10`)).data;
-        setBankAccounts(result.data)
-        setSelectedBankAccount(result.data[0].name)
+
+        dispatch(setBankAccounts(result.data))
+        dispatch(setSelectedBankAccount(result.data[0]))
+        dispatch(setSelectedBankAccountNameOnly(result.data[0].name))
+        
+        // console.log(result.data[0].name)
+        // dispatch(setSelectedBankAccountName({name: result.data[0].name})
+
     }
 
     useEffect(()=> {
         getBankAccountsFromServer()
     }, [])
+    // #endregion
+
 
     function handleOnChangeSelect(e:any) {
-        setSelectedBankAccount(e.target.value)
+        dispatch(setSelectedBankAccountName(e.target.value))
     }
     
     return (

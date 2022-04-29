@@ -1,9 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TProduct } from '../../../interfaces/TProduct';
 
+export interface IBankAccount {
+    id?: number
+    code: string
+    name: string
+    currencyId: number
+    balance: number
+    clientId: number
+    isActive: boolean
+    dateCreated: string
+    dateModified: null
+}
+
 export interface ICartStore {
     products: ICartProduct[]
     totalValue: number
+    selectedBankAccount: IBankAccount | null
+    selectedBankAccountName: IBankAccountName | null
+    selectedBankAccountNameOnly: string
+    bankAccounts: IBankAccount[]
 }
 
 export interface ICartProduct {
@@ -16,13 +32,24 @@ export interface IQuantityPayload {
     quantity: number
 }
 
+export interface IBankAccountName {
+    name: string
+}
+
 const calculateTotalPrice = (storeState: ICartStore) => {
     let totPrice = 0;
     storeState.products.forEach((x) => totPrice += x.product.price * x.quantity);
     return totPrice;
 }
 
-const initValue : ICartStore = { products: [], totalValue: 0 }
+const initValue : ICartStore = { 
+    products: [], 
+    totalValue: 0, 
+    selectedBankAccount: null, 
+    selectedBankAccountName: null, 
+    selectedBankAccountNameOnly: "",
+    bankAccounts: [] 
+}
 
 const cartStore = createSlice({
 
@@ -61,6 +88,22 @@ const cartStore = createSlice({
 
     invalidateCart() {
         return initValue;
+    },
+
+    setSelectedBankAccount(state, action:PayloadAction<IBankAccount>) {
+        state.selectedBankAccount = action.payload
+    },
+
+    setSelectedBankAccountName(state, action:PayloadAction<IBankAccountName>) {
+        state.selectedBankAccountName = action.payload
+    },
+
+    setSelectedBankAccountNameOnly(state, action:PayloadAction<string>) {
+        state.selectedBankAccountNameOnly = action.payload
+    },
+
+    setBankAccounts(state, action:PayloadAction<IBankAccount[]>) {
+        state.bankAccounts = action.payload
     }
 
   }
@@ -69,4 +112,13 @@ const cartStore = createSlice({
 
 export default cartStore;
 
-export const { addProduct, deleteProductById, changeProductQuantity, invalidateCart  } = cartStore.actions;
+export const { 
+    addProduct, 
+    deleteProductById, 
+    changeProductQuantity, 
+    invalidateCart, 
+    setSelectedBankAccount, 
+    setSelectedBankAccountName,
+    setBankAccounts,
+    setSelectedBankAccountNameOnly
+} = cartStore.actions;
