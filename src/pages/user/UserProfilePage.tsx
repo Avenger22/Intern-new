@@ -6,6 +6,15 @@ import FooterCommon from '../../main/components/Common/FooterCommon/FooterCommon
 import HeaderCommon from '../../main/components/Common/HeaderCommon/HeaderCommon';
 import useGetUser from '../../main/hooks/useGetUser';
 import "./UserProfilePage.css"
+
+import {
+    setTransactions,
+    invalidateTransactions
+} from "../../main/store/stores/profile/profile.store"
+import ITransaction from '../../main/interfaces/ITransaction';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../main/store/redux/rootState';
+import axios from 'axios';
 // #endregion
 
 
@@ -17,10 +26,22 @@ export default function UserProfilePage({validateUser}:any) {
     const navigate = useNavigate()
     const params = useParams()
     const user = useGetUser()
+    const dispatch = useDispatch()
     // #endregion
 
 
     // #region "fetch things"
+    const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
+
+    async function getProductsFromServer() {
+        let result = await (await axios.get(`bankaccount/32/transactions?PageNumber=1&PageSize=10`)).data;
+        dispatch(setTransactions(result.data))
+    }
+
+    useEffect(()=> {
+        getProductsFromServer()
+    }, [])
+
     // #endregion
 
 
