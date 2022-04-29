@@ -81,6 +81,8 @@ export default function UserProfilePage({validateUser}:any) {
     }
     // #endregion
 
+    
+    // #region "Helpers functions"
     function handleOnChangeSelect(e:any) {
         setSelectedBankProfileName(e.target.value)
     }
@@ -93,6 +95,8 @@ export default function UserProfilePage({validateUser}:any) {
         setSelectedBankProfile(bankAccountFinal)
 
     }
+    // #endregion
+
     
     return (
 
@@ -104,11 +108,9 @@ export default function UserProfilePage({validateUser}:any) {
 
                 <div className="container-profile-nav">
 
-                    <div className="profile-info">
-
+                    <div className="profile-info">]
                         <img src="https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png" />
                         <span className="userName-span">{user?.username}</span>
-
                     </div>
 
                 </div>
@@ -172,7 +174,6 @@ export default function UserProfilePage({validateUser}:any) {
 
                                 <div className="container-transactions">
 
-                                    
                                     <ul className='transactions'>
 
                                         {
@@ -206,9 +207,14 @@ export default function UserProfilePage({validateUser}:any) {
 
                             <div className="container-about">
                                 <span>This is my account {user?.username}</span>
+                                <span>My name is: {user?.firstName}</span>
+                                <span>My name is: {user?.lastName}</span>
+                                <span>My email is: {user?.email}</span>
+                                <span>My birthdate is: {user?.birthdate}</span>
+                                <span>My phone number is: {user?.phone}</span>
                             </div>
 
-                        ):null
+                        ): null
 
                     }
 

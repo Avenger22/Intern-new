@@ -10,7 +10,9 @@ import "./ProductItemPage.css"
 
 import { 
     setProductItem,
-    invalidateProductItem
+    invalidateProductItem,
+    setCategories,
+    invalidateCategories
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import {
@@ -23,12 +25,14 @@ import {
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 import useGetUser from "../../main/hooks/useGetUser";
+import ICategory from "../../main/interfaces/ICategory";
 // #endregion
 
 
 const randColour = ["green", "red", "blue", "yellow"][
     Math.floor(Math.random() * 4)
 ];
+
 
 export default function ProductItemPage() {
 
@@ -39,13 +43,17 @@ export default function ProductItemPage() {
     const navigate = useNavigate()
     // #endregion
 
-    const [ selectQuantity, setSelectQuantity ] = useState<any>("")
-
 
     // #region "State redux and axios etc"
 
     //@ts-ignore
     const productItem: TProduct = useSelector((state: RootState) => state.dashboard.productItem);
+
+    //@ts-ignore
+    const categories: ICategory[] | undefined = useSelector((state: RootState) => state.dashboard.categories);
+
+    const [ selectQuantity, setSelectQuantity ] = useState<any>("")
+
     const user = useGetUser()
 
     async function getProductItemFromServer() {
@@ -75,6 +83,12 @@ export default function ProductItemPage() {
     // #endregion
     
 
+    // #region "Filtering categories and doing join in front end to replace categoryId"
+    const productCategoryName: any = categories.find(category => category.id === productItem.categoryId)
+    console.log(productCategoryName)
+    // #endregion
+
+    
     return (
 
         <>
@@ -122,6 +136,12 @@ export default function ProductItemPage() {
                                 <span className='special-product-span'>
                                     CategoryId
                                 </span> : {productItem?.categoryId}
+                            </p>
+
+                            <p>
+                                <span className='special-product-span'>
+                                    Category name
+                                </span> : {productCategoryName?.description}
                             </p>
 
                             <div className='button-wish-wrapper'>

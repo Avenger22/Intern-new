@@ -1,5 +1,5 @@
 // #region "Importing stuff"
-import { FC, useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
 import onLogout from "../../main/store/stores/user/login.store.on-logout"
 import { useDispatch, useSelector } from "react-redux"
 import {RootState} from '../../main/store/redux/rootState'
@@ -14,7 +14,9 @@ import {
     setProducts,
     invalidateProducts,
     setProductItem,
-    invalidateProductItem
+    invalidateProductItem,
+    setCategories,
+    invalidateCategories
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { TProduct } from "../../main/interfaces/TProduct";
@@ -74,6 +76,12 @@ const DashboardPage : FC = () => {
     // #region "Using react hooks and other stuff"
     const navigate = useNavigate()
     const dispatch = useDispatch();
+
+    //@ts-ignore
+    const categories: ICategory[] | undefined = useSelector((state: RootState) => state.dashboard.categories);
+
+    //@ts-ignore
+    const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
     // #endregion
 
 
@@ -88,9 +96,20 @@ const DashboardPage : FC = () => {
         dispatch(setProducts(result.data))
     }
 
+    async function getCategoriesFromServer() {
+        let result = await (await axios.get(`/category/get-all?PageNumber=1&PageSize=20`)).data;
+        dispatch(setCategories(result.data))
+    }
+
+    useEffect(()=> {
+        getCategoriesFromServer()
+    }, [])
+
     useEffect(()=> {
         getProductsFromServer()
     }, [])
+
+    dispatch(invalidateProductItem()) //when the component gets rendered i remove the productItem from redux state
 
     // #endregion
 
@@ -110,6 +129,39 @@ const DashboardPage : FC = () => {
     // #endregion
 
 
+    // #region "Helpers functions and filtering functions"
+
+    function findingCategoriesNamesForProducts(categoryId: number) {
+        const productCategoryName: any = categories?.find(category => category.id === categoryId)
+        return productCategoryName.description
+    }
+
+    function filterProductsBasedOnCategory(categoryIdArray: number) {
+
+        const newProducts: TProduct[] | undefined = [...products]
+        newProducts.filter(product => product.categoryId === categoryIdArray)
+
+        //@ts-ignore
+        dispatch(setProducts(newProducts))
+
+    }
+
+    if (categorySelected !== "") {
+
+        const newCategories: any = [...categories]
+
+        //@ts-ignore
+        newCategories.find(category => category.description === categorySelected )
+
+        // useCallback(filterProductsBasedOnCategory(newCategories.id))
+
+    }
+
+    // console.log(findingCategoriesNamesForProducts(11))
+
+    // #endregion
+
+
     return (
 
         <div className="dashboard-main-wrapper">
@@ -124,7 +176,7 @@ const DashboardPage : FC = () => {
                     
                         // @ts-ignore
                         products.map(product => 
-                            
+
                             <div className="product-item" key = {product.id} onClick={() => {
                                 navigate(`/products/${product.id}`)
                             }}>
@@ -134,10 +186,11 @@ const DashboardPage : FC = () => {
                                     alt={`${product.name}`}
                                 />
 
-                                <span><strong>Product Name:</strong> {product.name}</span>
-                                <p><strong>Product Short Desc:</strong> {product.shortDescription}</p>
-                                <span><strong>Product Price:</strong> {product.price}$</span>
-                                <span><strong>Product Category:</strong> {product.categoryId}</span>    
+                                <span><strong>Product Name: </strong> {product.name}</span>
+                                <p><strong>Product Short Desc: </strong> {product.shortDescription}</p>
+                                <span><strong>Product Price: </strong> {product.price}$</span>
+                                <span><strong>Product Category Id: </strong> {product.categoryId}</span>
+                                <span><strong>Product Category name: </strong> {findingCategoriesNamesForProducts(product.categoryId)}</span>        
 
                             </div>
                         
