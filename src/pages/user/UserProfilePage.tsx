@@ -163,6 +163,10 @@ export default function UserProfilePage({validateUser}:any) {
                                         }
 
                                     </select>
+
+                                    <label htmlFor="filter-by-type">
+                                        <h3>Bank balance: {selectedBankProfile?.balance}</h3>
+                                    </label>
                     
                                 </form>
 
