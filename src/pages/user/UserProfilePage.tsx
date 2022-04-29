@@ -11,10 +11,16 @@ import {
     setTransactions,
     invalidateTransactions
 } from "../../main/store/stores/profile/profile.store"
+
+import {
+    setBankAccounts
+} from "../../main/store/stores/cart/cart.store"
+
 import ITransaction from '../../main/interfaces/ITransaction';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../main/store/redux/rootState';
 import axios from 'axios';
+import { IBankAccount } from '../../main/store/stores/cart/cart.store';
 // #endregion
 
 
@@ -23,25 +29,41 @@ export default function UserProfilePage({validateUser}:any) {
 
     // #region "state redux and other react hooks here"
     const [tab, setTab] = useState<any>("home")
+
+    const [selectedBankProfile, setSelectedBankProfile] = useState<any>(null)
+    const [selectedBankProfileName, setSelectedBankProfileName] = useState<any>("")
+
     const navigate = useNavigate()
     const params = useParams()
+
     const user = useGetUser()
+
     const dispatch = useDispatch()
     // #endregion
 
 
     // #region "fetch things"
     const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
+    const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
 
-    async function getProductsFromServer() {
-        let result = await (await axios.get(`bankaccount/32/transactions?PageNumber=1&PageSize=10`)).data;
+    async function getTransactionsFromServer() {
+        let result = await (await axios.get(`bankaccount/${selectedBankProfile?.id}/transactions?PageNumber=1&PageSize=10`)).data;
         dispatch(setTransactions(result.data))
     }
 
+    // if (selectedBankProfile !==)
     useEffect(()=> {
-        getProductsFromServer()
-    }, [])
+        getTransactionsFromServer()
+    }, [selectedBankProfile])
 
+    async function getBankAccountsFromServer() {
+        let result = await (await axios.get(`/bankaccount/get-all?PageNumber=1&PageSize=10`)).data;
+        dispatch(setBankAccounts(result.data))
+    }
+
+    useEffect(() => {
+        getBankAccountsFromServer()
+    }, [])
     // #endregion
 
 
@@ -59,10 +81,22 @@ export default function UserProfilePage({validateUser}:any) {
     }
     // #endregion
 
+    function handleOnChangeSelect(e:any) {
+        setSelectedBankProfileName(e.target.value)
+    }
+
+    function handleOnChangeBankAccount(e:any) {
+
+        const newBankAccounts = [...bankAccounts]
+        const bankAccountFinal = newBankAccounts.find(bankAccount => bankAccount.name === e.target.value )
+
+        setSelectedBankProfile(bankAccountFinal)
+
+    }
     
     return (
 
-        <main>
+        <main className='main-profile'>
 
             <HeaderCommon />
 
@@ -100,11 +134,63 @@ export default function UserProfilePage({validateUser}:any) {
                             <>
                             
                                 <h3 className="special-video-you">User Transactions</h3>
+                                
+                                <form id="filter-by-sort">
 
-                                <div className="container-videos">
+                                    <label htmlFor="filter-by-type">
+                                        <h3>Choose bank account: </h3>
+                                    </label>
+                            
+                                    <select name="filter-by-sort" id="filter-by-sort" 
+                                    onChange={function (e: any) {
+                                        handleOnChangeSelect(e)
+                                        handleOnChangeBankAccount(e)
+                                    }}>
+                                        
+                                        {
+                                        
+                                            bankAccounts?.length === 0 ? (
+                                                <option value="Default">No Bank Account</option>
+                                            ): (
+                            
+                                                //@ts-ignore
+                                                bankAccounts.map(bankAccount =>  
+                                                    <option value={bankAccount.name}>{bankAccount.name}</option>
+                                                )
+
+                                            )
+
+                                        }
+
+                                    </select>
+                    
+                                </form>
+
+                                <div className="container-transactions">
 
                                     
-                                    <ul className='favorite-movies'>
+                                    <ul className='transactions'>
+
+                                        {
+
+                                            transactions.map(transaction => 
+                                                
+                                                <li key={transaction.id} className="transaction-element">
+
+                                                    <h3>Transaction ID: <strong>{transaction.id}</strong></h3>
+                                                    <span>Transaction bank account ID: <strong>{transaction.bankAccountId}</strong></span>
+                                                    <span>Transaction bank account name: <strong>{selectedBankProfileName}</strong></span>
+                                                    <span>Transaction action: <strong>{transaction.action}</strong></span>
+                                                    <span>Transaction amount: <strong>{transaction.amount}</strong></span>
+                                                    <span>Transaction description: <strong>{transaction.description}</strong></span>
+                                                    <span>Transaction isActive: <strong>{transaction.isActive ? "true" : "false"}</strong></span>
+                                                    <span>Transaction dateCreated: <strong>{transaction.dateCreated}</strong></span>
+
+                                                </li>
+
+                                            )
+
+                                        }
 
                                     </ul>
 

@@ -1,12 +1,22 @@
 section.container-profile-menus {
-    height: 80vh;
+    height: auto;
     width: 100%;
-
+    grid-area: "main-profile-menu";
     display: grid;
-    grid-template-rows: 100px 0.95fr 200px;
+    grid-template-rows: 100px 0.95fr;
     grid-gap: 50px;
 
     padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.main-profile {
+    display: grid;
+    grid-template: 
+    "header" 100px
+    "main-profile-menu" 0.95fr
+    "footer" 200px /
+    1fr
 }
 
 section.container-profile-menus .container-profile-nav {
@@ -46,10 +56,16 @@ section.container-profile-menus .profile-info {
     letter-spacing: 2px;
 }
 
+.container-transactions {
+    height: auto;
+    /* display: grid;
+    margin-bottom: 100px; */
+}
+
 .container-tabs {
     display: grid;
-    grid-template-rows: 0.1fr 0.9fr;
-    grid-gap: 25px;
+    grid-template-rows: 0.1fr auto;
+    grid-gap: 60px;
     /* height: auto; */
 }
 
@@ -91,14 +107,12 @@ section.container-profile-menus .profile-info {
     letter-spacing: 3px;
 }
 
-.favorite-movies {
+.transactions {
     display: grid;
-    grid-template-columns: repeat(5, 0.2fr);
+    grid-template-columns: repeat(3, 0.33fr);
     place-items: center;
-    grid-gap: 15px;
+    grid-gap: 50px 10px;
     place-content: center;
-    padding-left: 30px;
-    padding-right: 30px;
 }
 
 .movie-fav {
@@ -110,12 +124,28 @@ section.container-profile-menus .profile-info {
     cursor: pointer;
 }
 
+.transaction-element {
+    display: grid;
+    grid-template-rows: repeat(8, 0.12fr);
+    grid-gap: 15px;
+}
+
+.transaction-element h3 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.transaction-element span {
+    font-size: 16px;
+    font-weight: 400;
+}
+
 .movie-fav img {
     height: 250px;
     width: 200px;
 }
 
-.container-videos {
+.container-transaction {
     display: grid;
     grid-template-columns: repeat(4, 0.25fr);
     grid-gap: 20px;
