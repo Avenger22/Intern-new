@@ -67,6 +67,17 @@ export default function BagPage() {
     function handleOnChangeSelect(e:any) {
         dispatch(setSelectedBankAccountName(e.target.value))
     }
+
+    function handleOnChangeBankAccount(e: any) {
+
+        const newBankAccounts = [...bankAccounts]
+        const bankAccountFinal = newBankAccounts.find(bankAccount => bankAccount.name === e.target.value )
+
+        // console.log(bankAccountFinal)
+        dispatch(setSelectedBankAccount(bankAccountFinal))
+        dispatch(setSelectedBankAccountNameOnly(bankAccountFinal.name))
+
+    }
     
     return (
 
@@ -87,6 +98,7 @@ export default function BagPage() {
                         <select name="filter-by-sort" id="filter-by-sort" 
                         onChange={function (e: any) {
                             handleOnChangeSelect(e)
+                            handleOnChangeBankAccount(e)
                         }}>
                             
                             {

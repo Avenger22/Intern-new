@@ -1,3 +1,5 @@
+// #region "Importing stuff"
+import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon"
@@ -6,17 +8,55 @@ import useGetUser from "../../main/hooks/useGetUser"
 import { RootState } from "../../main/store/redux/rootState"
 import { IBankAccount, IBankAccountName } from "../../main/store/stores/cart/cart.store"
 import "./CheckoutPage.css"
+// #endregion
+
 
 export default function CheckoutPage() {
 
+
+    // #region "React hooks"
     const user = useGetUser()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    // #endregion
 
+
+    // #region "Redux state"
     const totalValue: number = useSelector((state: RootState) => state.cart.totalValue);
     const selectedBankAccount: IBankAccount = useSelector((state: RootState) => state.cart.selectedBankAccount);
     const selectedBankAccountName: IBankAccountName = useSelector((state: RootState) => state.cart.selectedBankAccountName)
+    const selectedBankAccountNameOnly: string = useSelector((state: RootState) => state.cart.selectedBankAccountNameOnly)
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts)
+    // #endregion
+
+    const handleFormSubmitPayment = async (e:any) => {
+
+        e.preventDefault()
+
+        const newBankAccounts = [...bankAccounts]
+        const bankAccountFinal = newBankAccounts.find(bankAccount => bankAccount.name === selectedBankAccountNameOnly )
+
+        console.log(bankAccountFinal)
+
+        const transactionData = {
+            bankAccountId: bankAccountFinal?.id,
+            action: 1,
+            amount: totalValue,
+            description: `Payment of ${user?.username}`,
+            isActive: true
+        }
+
+        console.log(transactionData)
+
+        let result = await axios.post(`/banktransaction`, transactionData);
+        console.log(result)
+
+        if (result.status === 200) {
+            console.log("Your transaction was succesful")
+            alert("Your transaction was succesful")
+        }
+
+    } 
 
     return (
 
@@ -29,8 +69,7 @@ export default function CheckoutPage() {
                 <form 
                     className="form-payment"
                     onSubmit={function (e) {
-                        // e.preventDefault()
-                        // handleFormSubmitPayment(e)
+                        handleFormSubmitPayment(e)
                     }}
                 >
 
@@ -55,7 +94,7 @@ export default function CheckoutPage() {
                         </label>
 
                         <label>
-                            <span>Bank account selected by you is: {selectedBankAccount.name} </span>
+                            <span>Bank account selected by you is: {selectedBankAccount?.name} </span>
                         </label>
 
                         <button type="submit" value="Submit">
