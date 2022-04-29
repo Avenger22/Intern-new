@@ -28,10 +28,13 @@ export default function UserProfilePage({validateUser}:any) {
 
 
     // #region "state redux and other react hooks here"
+    const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
+    const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
+
     const [tab, setTab] = useState<any>("home")
 
-    const [selectedBankProfile, setSelectedBankProfile] = useState<any>(null)
-    const [selectedBankProfileName, setSelectedBankProfileName] = useState<any>("")
+    const [selectedBankProfile, setSelectedBankProfile] = useState<any>(bankAccounts[0])
+    const [selectedBankProfileName, setSelectedBankProfileName] = useState<any>(bankAccounts[0]?.name)
 
     const navigate = useNavigate()
     const params = useParams()
@@ -43,9 +46,6 @@ export default function UserProfilePage({validateUser}:any) {
 
 
     // #region "fetch things"
-    const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
-    const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
-
     async function getTransactionsFromServer() {
         let result = await (await axios.get(`bankaccount/${selectedBankProfile?.id}/transactions?PageNumber=1&PageSize=10`)).data;
         dispatch(setTransactions(result.data))
