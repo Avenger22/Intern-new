@@ -12,8 +12,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
     setCategorySelected,
-    invalidateCategorySelected
+    invalidateCategorySelected,
+    setProducts
 } from "../../../store/stores/dashboard/dashboard.store"
+import { TProduct } from "../../../interfaces/TProduct";
 // #endregion
 
 
@@ -25,6 +27,38 @@ export default function HeaderCommon(this: any) {
 
     //@ts-ignore
     const categories: ICategory[] | undefined = useSelector((state: RootState) => state.dashboard.categories);
+    
+    // #region "For the moment broken features"
+    const products: TProduct[] | undefined = useSelector((state: RootState) => state.dashboard.products);
+    
+    // @ts-ignore
+    const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
+
+    function filterProductsBasedOnCategory(categoryIdArray: number) {
+
+        const newProducts: TProduct[] | undefined = [...products]
+        
+        newProducts.filter(product => product.categoryId === categoryIdArray)
+        console.log(newProducts)
+
+        //@ts-ignore
+        dispatch(setProducts(newProducts))
+
+    }
+    
+    function handleCategoryRender() {
+
+        const newCategories: any = [...categories]
+
+        //@ts-ignore
+        newCategories.filter(category => category.description === categorySelected)
+        // console.log(newCategories)
+
+        filterProductsBasedOnCategory(newCategories.id)
+
+    }
+    // #endregion
+
 
     return (
 
@@ -68,6 +102,7 @@ export default function HeaderCommon(this: any) {
                                         <li className = "special-list-drop" key={category.id} onClick={function (e: any) {
                                             e.stopPropagation()
                                             dispatch(setCategorySelected(category.description))
+                                            handleCategoryRender()
                                         }}>{category.description}</li>
 
                                     )

@@ -146,16 +146,16 @@ const DashboardPage : FC = () => {
 
     }
 
-    if (categorySelected !== "") {
+    // if (categorySelected !== "") {
 
-        const newCategories: any = [...categories]
+    //     const newCategories: any = [...categories]
 
-        //@ts-ignore
-        newCategories.find(category => category.description === categorySelected )
+    //     //@ts-ignore
+    //     newCategories.find(category => category.description === categorySelected )
 
-        // useCallback(filterProductsBasedOnCategory(newCategories.id))
+    //     filterProductsBasedOnCategory(newCategories.id)
 
-    }
+    // }
 
     // console.log(findingCategoriesNamesForProducts(11))
 
